@@ -1,3 +1,3 @@
 # DatabaseLosers
-I stack racks on racks on racks.
-I stack rows on rows on rows.
+Code used for database internal that also includes a web interfece.
+Database is not included.
