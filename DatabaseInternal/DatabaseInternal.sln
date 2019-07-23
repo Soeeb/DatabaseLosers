@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "DatabaseInternal", "DatabaseInternal\DatabaseInternal.pyproj", "{DEEF71EE-CDDD-4568-AC8C-4A3F57CDF74A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DEEF71EE-CDDD-4568-AC8C-4A3F57CDF74A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEEF71EE-CDDD-4568-AC8C-4A3F57CDF74A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEEF71EE-CDDD-4568-AC8C-4A3F57CDF74A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEEF71EE-CDDD-4568-AC8C-4A3F57CDF74A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A879E15A-55BC-4C1E-B2D2-60F60872F0B7}
+	EndGlobalSection
+EndGlobal
