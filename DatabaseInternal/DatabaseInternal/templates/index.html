@@ -1,4 +1,25 @@
 ﻿{% extends "layout.html" %}
 {% block content %}
+<div class="container">
+	{% for data in datas %}
+	<div class="card" style="width: 20rem;">
+		<div class="card-body">
+			<h5 class="font-weight-bold mb-3">{{data.subject}}</h5>
+			<p class="mb-0">{{data.summary}}</p>
+		</div>
+		<ul class="list-group list-group-flush">
+			<li class="list-group-item">Date: {{data.date}}</li>
+			<li class="list-group-item">Room: {{data.room}}</li>
+			<li class="list-group-item">Teacher: {{data.teachers}}</li>
+			<li class="list-group-item">Enrolled Students: {{data.enrolled}}/{{data.maxStudents}}</li>
+		</ul>
+		<div class="card-body">
+			<a href="#!" class="card-link, {{visable}}" >Edit</a>
+			<a href="#!" class="card-link">Enroll</a>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+
 
 {% endblock %}
