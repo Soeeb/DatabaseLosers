@@ -81,20 +81,21 @@ def register():
 		with connection.cursor() as cursor:
 			if request.method == "POST":
 				username_form = request.form['username']
-				select_sql = "SELECT COUNT(1) FROM tblusers WHERE username = %s"
-				val=(username_form,)
-				cursor.execute(select_sql, val)
-
 				firstName_form = request.form['firstName']
-
 				lastName_form = request.form['lastName']
-
 				email_form = request.form['email']
-
 				mobileNumber_form = request.form['mobileNumber']
-
+				
 				password_form = request.form['password']
+				password_form = hashlib.md5(password_form.encode()).hexdigest()
 
+				select_sql = "INSERT INTO `tbluser` (firstName, familyName, email, mobileNumber, username, password) VALUES (%s, %s, %s, %s, %s, %s)"
+				val=(firstName_form, lastName_form, email_form, mobileNumber_form, username_form, password_form)
+				cursor.execute(select_sql, val)
+				print('yeet')
+	finally:
+		connection.close()
+	return redirect(url_for("hello"))
 
 if __name__ == '__main__':
 	import os

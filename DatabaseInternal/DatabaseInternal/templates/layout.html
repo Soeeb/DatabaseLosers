@@ -99,24 +99,43 @@
 					<div class="modal-body mx-3">
 						<div class="md-form mb-5">
 							<i class="fas fa-user prefix grey-text"></i>
-							<input type="text" id="orangeForm-name" class="form-control validate">
-							<label data-error="wrong" data-success="right" for="orangeForm-name">Your name</label>
+							<input type="text" id="firstname" class="form-control validate" name="firstName">
+							<label data-error="wrong" data-success="right" for="orangeForm-name">Your first name</label>
 						</div>
+
+						<div class="md-form mb-5">
+							<i class="fas fa-lock prefix grey-text"></i>
+							<input type="text" id="lastname" class="form-control validate" name="lastName">
+							<label data-error="wrong" data-success="right" for="orangeForm-pass">Your last name</label>
+						</div>
+
+						<div class="md-form mb-5">
+							<i class="fas fa-lock prefix grey-text"></i>
+							<input type="text" id="username" class="form-control validate" name="username">
+							<label data-error="wrong" data-success="right" for="orangeForm-pass">Your username</label>
+						</div>
+
 						<div class="md-form mb-5">
 							<i class="fas fa-envelope prefix grey-text"></i>
-							<input type="email" id="orangeForm-email" class="form-control validate">
+							<input type="email" id="email" class="form-control validate" name="email">
 							<label data-error="wrong" data-success="right" for="orangeForm-email">Your email</label>
 						</div>
 
-						<div class="md-form mb-4">
+						<div class="md-form mb-5">
 							<i class="fas fa-lock prefix grey-text"></i>
-							<input type="password" id="orangeForm-pass" class="form-control validate">
+							<input type="password" id="password" class="form-control validate" name="password">
 							<label data-error="wrong" data-success="right" for="orangeForm-pass">Your password</label>
+						</div>
+
+						<div class="md-form mb-5">
+							<i class="fas fa-lock prefix grey-text"></i>
+							<input type="number" id="mobileNumber" class="form-control validate" name="mobileNumber">
+							<label data-error="wrong" data-success="right" for="orangeForm-pass">Your mobile number</label>
 						</div>
 
 					</div>
 					<div class="modal-footer d-flex justify-content-center">
-						<button class="btn btn-deep-orange">Sign up</button>
+						<button type="submit" class="btn btn-deep-orange">Sign up</button>
 					</div>
 				</div>
 			</div>
