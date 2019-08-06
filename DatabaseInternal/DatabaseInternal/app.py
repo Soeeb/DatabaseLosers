@@ -31,11 +31,6 @@ def allWorkshops():
 		connection.close()
 	return data
 
-def role(username):
-	select_sql = "SELECT tblusers.roleId as roleId FROM tblusers WHERE username = %s"
-		
-
-
 @app.route('/')
 def hello():
 	if session.get('logged_in'):
@@ -71,6 +66,7 @@ def login():
 						session['logged_in'] = True
 						return redirect(url_for('hello'))
 
+
 				raise ServerError('Invalid password')
 
 	except ServerError as e:
@@ -78,9 +74,27 @@ def login():
 		session['logged_in']= False
 	return redirect(url_for("hello"))
 
-@app.route('/login', methods=["GET","POST"])
+@app.route('/register', methods=["GET","POST"])
 def register():
-	pass
+	connection=create_connection()
+	try:
+		with connection.cursor() as cursor:
+			if request.method == "POST":
+				username_form = request.form['username']
+				select_sql = "SELECT COUNT(1) FROM tblusers WHERE username = %s"
+				val=(username_form,)
+				cursor.execute(select_sql, val)
+
+				firstName_form = request.form['firstName']
+
+				lastName_form = request.form['lastName']
+
+				email_form = request.form['email']
+
+				mobileNumber_form = request.form['mobileNumber']
+
+				password_form = request.form['password']
+
 
 if __name__ == '__main__':
 	import os
