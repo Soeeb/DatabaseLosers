@@ -36,7 +36,7 @@ def hello():
 	if session.get('logged_in'):
 		username_session=escape(session['username']).capitalize()
 		data = allWorkshops()
-		return render_template("index.html", datas = data)
+		return render_template("index.html", datas = data, session_user_name=username_session)
 	return render_template('index.html')
 
 @app.route('/login', methods=["GET","POST"])
@@ -58,12 +58,20 @@ def login():
 				val = (username_form)
 				cursor.execute(select_sql,val)
 				data = list(cursor.fetchall())
+				select_sql = "SELECT roleId FROM tblusers WHERE username = %s"
+				cursor.execute(select_sql,val)
+				roleId = cursor.fetchone()
+				print (roleId)
+				roleId = roleId["roleId"]
+				print (roleId)
 				print(data)
 				for row in data:
 					print(md5(password_form.encode()).hexdigest())
 					if md5(password_form.encode()).hexdigest()==row["Password"]:
 						session['username'] = request.form['username']
 						session['logged_in'] = True
+						session['role'] = roleId
+						select_sql = "SELECT roleId FROM tbluser WHERE username = %s"
 						return redirect(url_for('hello'))
 
 
@@ -89,12 +97,21 @@ def register():
 				password_form = request.form['password']
 				password_form = hashlib.md5(password_form.encode()).hexdigest()
 
-				select_sql = "INSERT INTO `tbluser` (firstName, familyName, email, mobileNumber, username, password) VALUES (%s, %s, %s, %s, %s, %s)"
+				select_sql = "INSERT INTO `tblusers` (firstName, familyName, email, mobileNumber, username, password, roleId) VALUES (%s, %s, %s, %s, %s, %s, 3)"
 				val=(firstName_form, lastName_form, email_form, mobileNumber_form, username_form, password_form)
+				print(val)
 				cursor.execute(select_sql, val)
 				print('yeet')
+		connection.commit()
 	finally:
 		connection.close()
+	return redirect(url_for("hello"))
+
+@app.route('/logout')
+def logout():
+	session['logged_in'] = False
+	session.pop('username', None)
+	session.pop('role', None)
 	return redirect(url_for("hello"))
 
 if __name__ == '__main__':
