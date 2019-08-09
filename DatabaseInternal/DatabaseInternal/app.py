@@ -36,7 +36,7 @@ def hello():
 	if session.get('logged_in'):
 		username_session=escape(session['username']).capitalize()
 		data = allWorkshops()
-		return render_template("index.html", datas = data, session_user_name=username_session)
+		return render_template("index.html", datas = data, session_user_name=username_session, session=session)
 	return render_template('index.html')
 
 @app.route('/login', methods=["GET","POST"])
@@ -53,25 +53,23 @@ def login():
 				if not list(cursor.fetchone())[0]:
 					raise ServerError('Invalid username')
 
+				select_sql = "SELECT password, roleId, userId FROM tblusers WHERE username = %s"
+				cursor.execute(select_sql,val)
+				holder = cursor.fetchone()
+				print (holder)
+
 				password_form = request.form['password']
 				select_sql = "SELECT Password FROM tblusers WHERE username = %s"
-				val = (username_form)
 				cursor.execute(select_sql,val)
 				data = list(cursor.fetchall())
-				select_sql = "SELECT roleId FROM tblusers WHERE username = %s"
-				cursor.execute(select_sql,val)
-				roleId = cursor.fetchone()
-				print (roleId)
-				roleId = roleId["roleId"]
-				print (roleId)
 				print(data)
 				for row in data:
 					print(md5(password_form.encode()).hexdigest())
 					if md5(password_form.encode()).hexdigest()==row["Password"]:
 						session['username'] = request.form['username']
 						session['logged_in'] = True
-						session['role'] = roleId
-						select_sql = "SELECT roleId FROM tbluser WHERE username = %s"
+						session['role'] = holder['roleId']
+						session['userId'] = holder['userId']
 						return redirect(url_for('hello'))
 
 
@@ -81,6 +79,15 @@ def login():
 		error = str(e)
 		session['logged_in']= False
 	return redirect(url_for("hello"))
+
+#@app.route('/enroll', methods=["GET","POST"])
+#def enroll():
+#	connection=create_connection()
+#	try:
+#		with connection.cursor() as cursor:
+#			if request.method == "POST":
+#				userId = session['roleId']
+
 
 @app.route('/register', methods=["GET","POST"])
 def register():

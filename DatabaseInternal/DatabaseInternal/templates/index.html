@@ -13,10 +13,12 @@
 			<li class="list-group-item">Teacher: {{data.teachers}}</li>
 			<li class="list-group-item">Enrolled Students: {{data.enrolled}}/{{data.maxStudents}}</li>
 		</ul>
-		<div class="card-body">
-			<a href="#!" class="card-link, {{visable}}" >Edit</a>
-			<a href="#!" class="card-link">Enroll</a>
-		</div>
+        <div class="card-body">
+            {% if session.roleId == 1 or 2 %}
+            <a href="#!" class="card-link,">Edit</a>
+            {% endif %}
+            <a href="#!" class="card-link">Enroll</a>
+        </div>
 	</div>
 	{% endfor %}
 </div>
