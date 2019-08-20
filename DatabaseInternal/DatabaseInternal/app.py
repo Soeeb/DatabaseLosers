@@ -35,8 +35,10 @@ def allWorkshops():
 def hello():
 	if session.get('logged_in'):
 		username_session=escape(session['username']).capitalize()
+		role=escape(session['role'])
 		data = allWorkshops()
-		return render_template("index.html", datas = data, session_user_name=username_session, session=session)
+		print(role)
+		return render_template("index.html", datas = data, session_user_name=username_session, role=role)
 	return render_template('index.html')
 
 @app.route('/login', methods=["GET","POST"])
@@ -113,6 +115,10 @@ def register():
 	finally:
 		connection.close()
 	return redirect(url_for("hello"))
+
+#@app.route('/edit', methods=["GET","POST"])
+#def edit():
+
 
 @app.route('/logout')
 def logout():

@@ -1,27 +1,60 @@
 ﻿{% extends "layout.html" %}
 {% block content %}
 <div class="container">
-	{% for data in datas %}
-	<div class="card" style="width: 20rem;">
-		<div class="card-body">
-			<h5 class="font-weight-bold mb-3">{{data.subject}}</h5>
-			<p class="mb-0">{{data.summary}}</p>
+	<!--Carousel Wrapper-->
+	<div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
+
+		<!--Controls-->
+		<div class="controls-top">
+			<a class="btn-floating" href="#multi-item-example" data-slide="prev"><i class="fas fa-chevron-left"></i></a>
+			<a class="btn-floating" href="#multi-item-example" data-slide="next">
+				<i class="fas fa-chevron-right"></i>
+			</a>
 		</div>
-		<ul class="list-group list-group-flush">
-			<li class="list-group-item">Date: {{data.date}}</li>
-			<li class="list-group-item">Room: {{data.room}}</li>
-			<li class="list-group-item">Teacher: {{data.teachers}}</li>
-			<li class="list-group-item">Enrolled Students: {{data.enrolled}}/{{data.maxStudents}}</li>
-		</ul>
-        <div class="card-body">
-            {% if session.roleId == 1 or 2 %}
-            <a href="#!" class="card-link,">Edit</a>
-            {% endif %}
-            <a href="#!" class="card-link">Enroll</a>
-        </div>
-	</div>
-	{% endfor %}
+		<!--/.Controls-->
+		<!--Indicators-->
+		<ol class="carousel-indicators">
+			<li data-target="#multi-item-example" data-slide-to="0" class="active"></li>
+			<li data-target="#multi-item-example" data-slide-to="1"></li>
+			<li data-target="#multi-item-example" data-slide-to="2"></li>
+		</ol>
+		<!--/.Indicators-->
+		<!--Slides-->
+		<div class="carousel-inner" role="listbox">
+
+			<!--First slide-->
+			<div class="carousel-item active">
+				<div class="row">
+		{% for data in datas %}
+		<div class="col-md-4">
+			<div class="card mb-2">
+				<div class="card-body">
+					<h5 class="font-weight-bold mb-3">{{data.subject}}</h5>
+					<p class="mb-0">{{data.summary}}</p>
+				</div>
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item">Date: {{data.date}}</li>
+					<li class="list-group-item">Room: {{data.room}}</li>
+					<li class="list-group-item">Teacher: {{data.teachers}}</li>
+					<li class="list-group-item">Enrolled Students: {{data.enrolled}}/{{data.maxStudents}}</li>
+				</ul>
+				<div class="card-body">
+					{% if role == "1" or role == "2" %}
+					<a href="#!" class="card-link,">Edit</a>
+					{% endif %}
+					<a href="#!" class="card-link">Enroll</a>
+				</div>
+			</div>
+		</div>
+		{% if loop.index is divisibleby 3 and not loop.last %}
+				</div>
+			</div>
+			<div class="carousel-item">
+				<div class="row">
+		{% endif %}
+		{% endfor %}
+	</div><!--/.Slides-->
+
+	<!--/.Carousel Wrapper-->
 </div>
-
-
-{% endblock %}
+	{% endblock %}
