@@ -25,6 +25,12 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
+        {% if session_user_name %}
+        <span class="navbar-text black-text">
+            Hello {{session_user_name}}
+        </span>
+        {% endif %}
+
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
