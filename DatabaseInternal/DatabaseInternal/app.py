@@ -22,7 +22,7 @@ def allWorkshops():
 	connection=create_connection()
 	try:
 		with connection.cursor() as cursor:
-			select_sql = "SELECT tblworkshops.workshopId as id, tblworkshops.date as date, tblworkshops.room as room, tblworkshops.subject as subject, tblworkshops.workshopId as summary, tblworkshops.teachers as teachers, tblworkshops.maxStudents as maxStudents,  tblworkshops.enrolledStudents as enrolled FROM tblworkshops"
+			select_sql = "SELECT tblworkshops.workshopId as id, tblworkshops.date as date, tblworkshops.room as room, tblworkshops.subject as subject, tblworkshops.summary as summary, tblworkshops.teachers as teachers, tblworkshops.maxStudents as maxStudents,  tblworkshops.enrolledStudents as enrolled FROM tblworkshops"
 			cursor.execute(select_sql)
 			data = cursor.fetchall()
 			data = list(data)
@@ -38,6 +38,7 @@ def hello():
 		role=escape(session['role'])
 		data = allWorkshops()
 		print(role)
+		print(username_session)
 		return render_template("index.html", datas = data, session_user_name=username_session, role=role)
 	return render_template('index.html')
 
@@ -82,14 +83,19 @@ def login():
 		session['logged_in']= False
 	return redirect(url_for("hello"))
 
-#@app.route('/enroll', methods=["GET","POST"])
-#def enroll():
-#	connection=create_connection()
-#	try:
-#		with connection.cursor() as cursor:
-#			if request.method == "POST":
-#				userId = session['roleId']
 
+@app.route('/enroll', methods=["GET","POST"])
+def enroll():
+	connection=create_connection()
+	try:
+		with connection.cursor() as cursor:
+			userId = session['userId']
+			workshopId = request.args.get('workshopId')
+
+			print(workshopId)
+	finally:
+		connection.close()
+	return	redirect(url_for('hello'))
 
 @app.route('/register', methods=["GET","POST"])
 def register():
