@@ -19,8 +19,8 @@
 					<div class="row">
 			{% for data in datas %}
 			<div class="col-md-4">
-				<div class="card mb-2">
-					<div class="card-body">
+				<div class="card" style="height:23rem; max-width: 20rem">
+					<div class="card-body ">
 						<h5 class="font-weight-bold mb-3">{{data.subject}}</h5>
 						<p class="mb-0">{{data.summary}} {{data.id}}</p>
 					</div>
@@ -40,9 +40,18 @@
 			</div>
 			{% if loop.index is divisibleby 3 and not loop.last %}
 					</div>
-				</div>
+				</div>0
 				<div class="carousel-item">
 					<div class="row">
+			{% endif %}
+			{% if loop.last %}
+					<div class="col-mD-4">
+						<div class="card card-block d-flex" style="height:23rem; max-width: 20rem">
+							<div class="card-body align-items-center d-flex justify-content-center">
+								<i class="fas fa-plus-circle fa-5x"></i>
+							</div>
+					</div>
+
 			{% endif %}
 			{% endfor %}
 		</div><!--/.Slides-->
