@@ -22,11 +22,10 @@ def allWorkshops():
 	connection=create_connection()
 	try:
 		with connection.cursor() as cursor:
-			select_sql = "SELECT tblworkshops.workshopId as id, tblworkshops.date as date, tblworkshops.room as room, tblworkshops.subject as subject, tblworkshops.summary as summary, tblworkshops.teachers as teachers, tblworkshops.maxStudents as maxStudents,  tblworkshops.enrolledStudents as enrolled FROM tblworkshops"
+			select_sql = "SELECT tw.workshopId Id, tw.subject subject, tw.room room, tw.summary summary,tw.maxStudents maxStudents, tw.teacherId teacherId, tw.date date, qCounts.StudentCount enrolled FROM tblworkshops tw INNER JOIN ( SELECT tw.WorkshopId, COUNT(ta.UserId) StudentCount FROM tblworkshops tw LEFT JOIN tblworkshopassign ta ON tw.WorkshopId = ta.WorkshopId GROUP BY tw.WorkshopId ORDER BY tw.WorkshopId) qCounts ON tw.WorkshopId = qCounts.WorkshopId LEFT JOIN tblusers tu ON tu.UserId=tw.teacherId"
 			cursor.execute(select_sql)
 			data = cursor.fetchall()
 			data = list(data)
-			print(data)
 	finally:
 		connection.close()
 	return data
@@ -37,8 +36,6 @@ def hello():
 		username_session=escape(session['username']).capitalize()
 		role=escape(session['role'])
 		data = allWorkshops()
-		print(role)
-		print(username_session)
 		return render_template("index.html", datas = data, session_user_name=username_session, role=role)
 	return render_template('index.html')
 
@@ -59,15 +56,12 @@ def login():
 				select_sql = "SELECT password, roleId, userId FROM tblusers WHERE username = %s"
 				cursor.execute(select_sql,val)
 				holder = cursor.fetchone()
-				print (holder)
 
 				password_form = request.form['password']
 				select_sql = "SELECT Password FROM tblusers WHERE username = %s"
 				cursor.execute(select_sql,val)
 				data = list(cursor.fetchall())
-				print(data)
 				for row in data:
-					print(md5(password_form.encode()).hexdigest())
 					if md5(password_form.encode()).hexdigest()==row["Password"]:
 						session['username'] = request.form['username']
 						session['logged_in'] = True
@@ -91,8 +85,12 @@ def enroll():
 		with connection.cursor() as cursor:
 			userId = session['userId']
 			workshopId = request.args.get('workshopId')
+			
+			select_sql = "INSERT INTO `tblworkshopassign` (workshopId, userId) VALUES (%s, %s)"
+			val = (workshopId, userId)
 
-			print(workshopId)
+			cursor.execute(select_sql, val)
+		connection.commit()
 	finally:
 		connection.close()
 	return	redirect(url_for('hello'))
@@ -114,9 +112,7 @@ def register():
 
 				select_sql = "INSERT INTO `tblusers` (firstName, familyName, email, mobileNumber, username, password, roleId) VALUES (%s, %s, %s, %s, %s, %s, 3)"
 				val=(firstName_form, lastName_form, email_form, mobileNumber_form, username_form, password_form)
-				print(val)
 				cursor.execute(select_sql, val)
-				print('yeet')
 		connection.commit()
 	finally:
 		connection.close()
@@ -125,6 +121,27 @@ def register():
 #@app.route('/edit', methods=["GET","POST"])
 #def edit():
 
+@app.route('/create', methods=["GET","POST"])
+def create():
+	connection=create_connection()
+	try:
+		with connection.cursor() as cursor:
+			if request.method == "POST":
+				date_form = request.form['date']
+				room_form = request.form['room']
+				subject_form = request.form['subject']
+				summary_form = request.form['summary']
+				teacher_form = request.form['teacher']
+				maxStudent_form = request.form['maxStudents']
+
+				select_sql = "INSERT INTO `tblworkshops` (date, room, subject, summary, teachers, maxStudents) VALUES (%s, %s, %s, %s, %s, %s)"
+				val = (date_form, room_form, subject_form, summary_form, teacher_form, int(maxStudent_form))
+				print(val)
+				cursor.execute(select_sql, val)
+		connection.commit()
+	finally:
+		connection.close()
+	return redirect(url_for("hello"))
 
 @app.route('/logout')
 def logout():
