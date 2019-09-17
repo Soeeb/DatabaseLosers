@@ -1,29 +1,35 @@
-﻿	{% extends "layout.html" %}
-	{% block content %}
+﻿{% extends "layout.html" %}
+{% block content %}
 <div class="container-fluid">
-    <div class="card-deck">
-        {% for data in datas %}
-        <div class="col-md-4">
-            <div class="card" style="margin-top:2.5rem">
-                <div class="card-body">
-                    <h5 class="font-weight-bold mb-3">{{data.subject}}</h5>
-                    <p class="mb-0">{{data.summary}} {{data.Id}}</p>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Date: {{data.date}}</li>
-                    <li class="list-group-item">Room: {{data.room}}</li>
-                    <li class="list-group-item">Teacher: {{data.teacherId}}</li>
-                    <li class="list-group-item">Enrolled Students: {{data.enrolled}}/{{data.maxStudents}}</li>
-                </ul>
-                </div>
-                <div class="card-body">
-                    {% if role == "1" or role == "2" %}
-                    <a href="#!" class="card-link,">Edit</a>
-                    {% endif %}
-                    <a href="/enroll?workshopId={{data.Id}}" class="card-link">Enroll</a>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
+	<div class="card-deck">
+		{% for data in datas %}
+		<div class="card" style="margin-top:2.5rem;min-width:20rem">
+			<div class="card-body">
+				<h5 class="font-weight-bold mb-3">{{data.subject}}</h5>
+				<p class="mb-0">{{data.summary}} {{data.Id}}</p>
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item">Date: {{data.date}}</li>
+					<li class="list-group-item">Room: {{data.room}}</li>
+					<li class="list-group-item">Teacher: {{data.teacherId}}</li>
+					<li class="list-group-item">Enrolled Students: {{data.enrolled}}/{{data.maxStudents}}</li>
+				</ul>
+			</div>
+			<div class="card-body">
+				{% if role == "1" or role == "2" %}
+				<a href="#!" class="card-link,">Edit</a>
+				{% endif %}
+				<a href="/enroll?workshopId={{data.Id}}" class="card-link">Enroll</a>
+			</div>
+		</div>
+		{% endfor %}
+		{% if role == "1" or role == "2" %}
+		<div class="card" style="margin-top:2.5rem;min-width:20rem">
+			<div class="card-body align-items-center d-flex justify-content-center">
+				<a href="" data-toggle="modal" data-target="#modalCreateForm"><i class="fas fa-plus-circle fa-5x"></i></a>
+			</div>
+		</div>
+		{% endif %}
+	</div>
 </div>
+{% include "create.html" %}
 {% endblock %}

@@ -39,6 +39,15 @@ def hello():
 		return render_template("index.html", datas = data, session_user_name=username_session, role=role)
 	return render_template('index.html')
 
+@app.route('/dashboard')
+def dashboard():
+	if session.get('logged_in'):
+		username_session=escape(session['username']).capitalize()
+		role=escape(session['role'])
+		data = allWorkshops()
+		return render_template("dashboard.html", datas = data, session_user_name=username_session, role=role)
+	return render_template('index.html')
+
 @app.route('/login', methods=["GET","POST"])
 def login():
 	connection=create_connection()

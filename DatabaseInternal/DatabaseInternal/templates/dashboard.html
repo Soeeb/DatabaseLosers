@@ -1,0 +1,40 @@
+﻿{% extends "layout.html" %}
+{% block content %}
+<table class="table">
+	<thead class="thread-dark">
+		<tr>
+			<th scope="col">Workshop Id</th>
+			<th scope="col">Subject</th>
+			<th scope="col">Summary</th>
+			<th scope="col">Date</th>
+			<th scope="col">Room</th>
+			<th scope="col">Teacher</th>
+			<th scope="col">Students Enrolled</th>
+			<th scope="col">Max Students</th>
+			<th scope="col">Options</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for data in datas %}
+		<tr>
+			<th scope="row">{{data.Id}}</th>
+			<td>{{data.subject}}</td>
+			<td>{{data.summary}}</td>
+			<td>{{data.date}}</td>
+			<td>{{data.room}}</td>
+			<td>{{data.teacherId}}</td>
+			<td>{{data.enrolled}}</td>
+			<td>{{data.maxStudents}}</td>
+			<td>
+				<a href="/edit" class="btn btn-danger btn-rounded mb-4">
+				Edit
+				</a>
+				<a href="/delete" class="btn btn-danger btn-rounded mb-4">
+				Delete
+				</a>
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock %}
