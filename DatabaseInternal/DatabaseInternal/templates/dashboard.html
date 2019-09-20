@@ -8,7 +8,8 @@
 			<th scope="col">Summary</th>
 			<th scope="col">Date</th>
 			<th scope="col">Room</th>
-			<th scope="col">Teacher</th>
+			<th scope="col">User Id</th>
+			<th scope="col">Family Name</th>
 			<th scope="col">Students Enrolled</th>
 			<th scope="col">Max Students</th>
 			<th scope="col">Options</th>
@@ -23,14 +24,15 @@
 			<td>{{data.date}}</td>
 			<td>{{data.room}}</td>
 			<td>{{data.teacherId}}</td>
+			<td>{{data.familyName}}</td>
 			<td>{{data.enrolled}}</td>
 			<td>{{data.maxStudents}}</td>
 			<td>
 				<a href="/edit" class="btn btn-danger btn-rounded mb-4">
-				Edit
+					Edit
 				</a>
 				<a href="/delete" class="btn btn-danger btn-rounded mb-4">
-				Delete
+					Delete
 				</a>
 			</td>
 		</tr>
@@ -40,19 +42,20 @@
 <table class="table">
 	<thead>
 		<tr>
-			<th scope="col">Hello!</th>
-			<th scope="col">Hello!</th>
-			<th scope="col">Hello!</th>
-			<th scope="col">Hello!</th>
+			<th scope="col">Assing Id</th>
+			<th scope="col">Workshop Id</th>
+			<th scope="col">User Id</th>
+			<th scope="col">Family Name</th>
+			<th scope="col">Options</th>
 		</tr>
 	</thead>
 	<tbody>
 		{% for user in users %}
 		<tr>
-			<th scope="row">Is fps russia</th>
-			<td>Ha ha lol xd</td>
-			<td>Ha ha lol xd</td>
-			<td>Ha ha lol xd</td>
+			<th scope="row">{{user.assignId}}</th>
+			<td>{{user.workshopId}}</td>
+			<td>{{user.userId}}</td>
+			<td>{{user.familyName}}</td>
 		</tr>
 		{% endfor %}
 	</tbody>

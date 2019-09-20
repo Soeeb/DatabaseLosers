@@ -22,7 +22,19 @@ def allWorkshops():
 	connection=create_connection()
 	try:
 		with connection.cursor() as cursor:
-			select_sql = "SELECT tw.workshopId Id, tw.subject subject, tw.room room, tw.summary summary,tw.maxStudents maxStudents, tw.teacherId teacherId, tw.date date, qCounts.StudentCount enrolled FROM tblworkshops tw INNER JOIN ( SELECT tw.WorkshopId, COUNT(ta.UserId) StudentCount FROM tblworkshops tw LEFT JOIN tblworkshopassign ta ON tw.WorkshopId = ta.WorkshopId GROUP BY tw.WorkshopId ORDER BY tw.WorkshopId) qCounts ON tw.WorkshopId = qCounts.WorkshopId LEFT JOIN tblusers tu ON tu.UserId=tw.teacherId"
+			select_sql = "SELECT tw.workshopId Id, tw.subject subject, tw.room room, tw.summary summary,tw.maxStudents maxStudents, tw.teacherId teacherId, tw.date date, qCounts.StudentCount enrolled, tu.familyName familyName FROM tblworkshops tw INNER JOIN ( SELECT tw.WorkshopId, COUNT(ta.UserId) StudentCount FROM tblworkshops tw LEFT JOIN tblworkshopassign ta ON tw.WorkshopId = ta.WorkshopId GROUP BY tw.WorkshopId ORDER BY tw.WorkshopId) qCounts ON tw.WorkshopId = qCounts.WorkshopId LEFT JOIN tblusers tu ON tu.UserId=tw.teacherId"
+			cursor.execute(select_sql)
+			data = cursor.fetchall()
+			data = list(data)
+	finally:
+		connection.close()
+	return data
+
+def allworkshopassign():
+	connection=create_connection()
+	try:
+		with connection.cursor() as cursor:
+			select_sql = "SELECT ta.assignId assignId, ta.workshopId workshopId, ta.userId userId, tu.familyName familyName FROM tblworkshopassign ta INNER JOIN tblworkshops tw ON ta.workshopId=tw.workshopId INNER JOIN tblusers tu ON ta.userId=tu.userId "
 			cursor.execute(select_sql)
 			data = cursor.fetchall()
 			data = list(data)
@@ -45,7 +57,8 @@ def dashboard():
 		username_session=escape(session['username']).capitalize()
 		role=escape(session['role'])
 		data = allWorkshops()
-		return render_template("dashboard.html", datas = data, session_user_name=username_session, role=role)
+		user = allworkshopassign()
+		return render_template("dashboard.html", datas = data, session_user_name=username_session, role=role, users=user)
 	return render_template('index.html')
 
 @app.route('/login', methods=["GET","POST"])
