@@ -172,6 +172,10 @@ def logout():
 	session.pop('role', None)
 	return redirect(url_for("hello"))
 
+@app.route('/edit')
+def edit():
+
+
 if __name__ == '__main__':
 	import os
 	HOST = os.environ.get('SERVER_HOST', 'localhost')
