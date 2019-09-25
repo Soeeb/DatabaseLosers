@@ -34,7 +34,7 @@ def allworkshopassign():
 	connection=create_connection()
 	try:
 		with connection.cursor() as cursor:
-			select_sql = "SELECT ta.assignId assignId, ta.workshopId workshopId, ta.userId userId, tu.familyName familyName FROM tblworkshopassign ta INNER JOIN tblworkshops tw ON ta.workshopId=tw.workshopId INNER JOIN tblusers tu ON ta.userId=tu.userId "
+			select_sql = "SELECT ta.assignId assignId, ta.workshopId workshopId, ta.userId userId, tu.familyName familyName FROM tblworkshopassign ta INNER JOIN tblworkshops tw ON ta.workshopId=tw.workshopId INNER JOIN tblusers tu ON ta.userId=tu.userId"
 			cursor.execute(select_sql)
 			data = cursor.fetchall()
 			data = list(data)
@@ -172,9 +172,31 @@ def logout():
 	session.pop('role', None)
 	return redirect(url_for("hello"))
 
-@app.route('/edit')
-def edit():
+@app.route('/delete')
+def delete():
+	connection=create_connection()
+	try:
+		with connection.cursor() as cursor:
+			assignId = request.args.get('assignId')
+			select_sql = "DELETE FROM tblworkshopassign WHERE assignId = %s"
+			cursor.execute(select_sql, assignId)
+		connection.commit()
+	finally:
+		connection.close()
+	return redirect(url_for("dashboard"))
 
+@app.route('/deleteData')
+def deleteData():
+	connection=create_connection()
+	try:
+		with connection.cursor() as cursor:
+			workshopId = request.args.get('workshopId')
+			select_sql = "DELETE FROM tblworkshops WHERE workshopId = %s"
+			cursor.execute(select_sql, workshopId)
+		connection.commit()
+	finally:
+		connection.close()
+	return redirect(url_for("dashboard"))
 
 if __name__ == '__main__':
 	import os
