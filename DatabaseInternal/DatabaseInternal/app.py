@@ -153,10 +153,10 @@ def create():
 				room_form = request.form['room']
 				subject_form = request.form['subject']
 				summary_form = request.form['summary']
-				teacher_form = request.form['teacher']
+				teacher_form = session['userId']
 				maxStudent_form = request.form['maxStudents']
 
-				select_sql = "INSERT INTO `tblworkshops` (date, room, subject, summary, teachers, maxStudents) VALUES (%s, %s, %s, %s, %s, %s)"
+				select_sql = "INSERT INTO `tblworkshops` (date, room, subject, summary, teacherId, maxStudents) VALUES (%s, %s, %s, %s, %s, %s)"
 				val = (date_form, room_form, subject_form, summary_form, teacher_form, int(maxStudent_form))
 				print(val)
 				cursor.execute(select_sql, val)
