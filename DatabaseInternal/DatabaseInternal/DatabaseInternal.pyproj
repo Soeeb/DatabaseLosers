@@ -30,6 +30,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="requirements.txt" />
+    <Content Include="templates\404.html" />
     <Content Include="templates\create.html" />
     <Content Include="templates\dashboard.html" />
     <Content Include="templates\index.html" />

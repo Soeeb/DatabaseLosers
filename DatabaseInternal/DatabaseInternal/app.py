@@ -26,6 +26,9 @@ def allWorkshops():
 			cursor.execute(select_sql)
 			data = cursor.fetchall()
 			data = list(data)
+
+	except Exception as e:
+		print(f'Fatal error: {e}')
 	finally:
 		connection.close()
 	return data
@@ -38,6 +41,8 @@ def allworkshopassign():
 			cursor.execute(select_sql)
 			data = cursor.fetchall()
 			data = list(data)
+	except Exception as e:
+		print(f'Fatal error: {e}')
 	finally:
 		connection.close()
 	return data
@@ -85,7 +90,7 @@ def login():
 				data = list(cursor.fetchall())
 				for row in data:
 					if md5(password_form.encode()).hexdigest()==row["Password"]:
-						session['username'] = request.form['username']
+						session['username'] = request.form['username']	
 						session['logged_in'] = True
 						session['role'] = holder['roleId']
 						session['userId'] = holder['userId']
@@ -197,6 +202,10 @@ def deleteData():
 	finally:
 		connection.close()
 	return redirect(url_for("dashboard"))
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 if __name__ == '__main__':
 	import os
