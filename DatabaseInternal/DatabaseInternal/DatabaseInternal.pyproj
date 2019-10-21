@@ -33,6 +33,7 @@
     <Content Include="templates\404.html" />
     <Content Include="templates\create.html" />
     <Content Include="templates\dashboard.html" />
+    <Content Include="templates\edit.html" />
     <Content Include="templates\index.html" />
     <Content Include="templates\layout.html" />
     <Content Include="templates\login.html" />

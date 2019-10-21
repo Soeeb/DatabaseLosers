@@ -17,8 +17,18 @@
 			<div class="card-body">
 				{% if role == "1" or role == "2" %}
 				<a href="#!" class="card-link,">Edit</a>
+				{% else %}
+				{% for assignment in assignments %}
+					{% if data.Id == assignment.workshopId %}
+				uid{{userId}} aid{{assignment.userId}}
+						<a href="/enroll?workshopId={{data.Id}}" class="card-link">Unroll</a>
+					{% else %}
+				uid{{userId}} AID{{assignment.userId}}
+						<a href="/enroll?workshopId={{data.Id}}" class="card-link">Enroll</a>
+					{% endif %}
+					{% endfor %}
 				{% endif %}
-				<a href="/enroll?workshopId={{data.Id}}" class="card-link">Enroll</a>
+
 			</div>
 		</div>
 		{% endfor %}

@@ -53,7 +53,15 @@ def hello():
 		username_session=escape(session['username']).capitalize()
 		role=escape(session['role'])
 		data = allWorkshops()
-		return render_template("index.html", datas = data, session_user_name=username_session, role=role)
+		connection = create_connection()
+		try: 
+			with connection.cursor() as cursor:
+				select_sql = "SELECT * FROM tblworkshopassign WHERE userId = %s"
+				cursor.execute(select_sql, session['userId'])
+				assignment = list(cursor.fetchall())
+		finally:
+			connection.close()
+		return render_template("index.html", datas = data, session_user_name=username_session, role=role, assignments = assignment, userId = session['userId'])
 	return render_template('index.html')
 
 @app.route('/dashboard')
@@ -147,6 +155,11 @@ def register():
 
 #@app.route('/edit', methods=["GET","POST"])
 #def edit():
+#	connection = create_connection()
+#	try:
+#		with connection.cursor() as cursor:
+#			if request.method == "POST":
+
 
 @app.route('/create', methods=["GET","POST"])
 def create():
