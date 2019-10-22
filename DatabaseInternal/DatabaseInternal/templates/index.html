@@ -3,6 +3,7 @@
 <div class="container-fluid">
 	<div class="card-deck">
 		{% for data in datas %}
+		{% include 'edit.html' %}
 		<div class="card" style="margin-top:2.5rem;min-width:20rem">
 			<div class="card-body">
 				<h5 class="font-weight-bold mb-3">{{data.subject}}</h5>
@@ -15,18 +16,21 @@
 				</ul>
 			</div>
 			<div class="card-body">
+				{%set ns =namespace(found = false)%}
 				{% if role == "1" or role == "2" %}
-				<a href="#!" class="card-link,">Edit</a>
+				<a href="" data-toggle="modal" data-target="#modaleditForm{{data.Id}}">
+					Edit
+				</a>
 				{% else %}
 				{% for assignment in assignments %}
-					{% if data.Id == assignment.workshopId %}
-				uid{{userId}} aid{{assignment.userId}}
-						<a href="/enroll?workshopId={{data.Id}}" class="card-link">Unroll</a>
-					{% else %}
-				uid{{userId}} AID{{assignment.userId}}
-						<a href="/enroll?workshopId={{data.Id}}" class="card-link">Enroll</a>
-					{% endif %}
-					{% endfor %}
+				{% if data.Id == assignment.workshopId %}
+				{%set ns.found = true%}
+				<a href="/unroll?workshopId={{data.Id}}" class="card-link">Unroll</a>
+				{% endif %}
+				{% endfor %}
+				{%if ns.found == false%}
+				<a href="/enroll?workshopId={{data.Id}}" class="card-link">Enroll</a>
+				{%endif%}
 				{% endif %}
 
 			</div>

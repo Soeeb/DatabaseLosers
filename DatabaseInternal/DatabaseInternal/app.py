@@ -130,6 +130,21 @@ def enroll():
 		connection.close()
 	return	redirect(url_for('hello'))
 
+@app.route('/unroll', methods=["GET","POST"])
+def unroll():
+	connection=create_connection()
+	try:
+		with connection.cursor() as cursor:
+			userId = session['userId']
+			workshopId = request.args.get('workshopId')
+			select_sql = "DELETE FROM `tblworkshopassign` WHERE userId = %s AND workshopId = %s"
+			val = (userId,workshopId)
+			cursor.execute(select_sql, val)
+		connection.commit()
+	finally:
+		connection.close()
+	return	redirect(url_for('hello'))
+
 @app.route('/register', methods=["GET","POST"])
 def register():
 	connection=create_connection()
@@ -153,12 +168,20 @@ def register():
 		connection.close()
 	return redirect(url_for("hello"))
 
-#@app.route('/edit', methods=["GET","POST"])
-#def edit():
-#	connection = create_connection()
-#	try:
-#		with connection.cursor() as cursor:
-#			if request.method == "POST":
+@app.route('/edit', methods=["GET","POST"])
+def edit():
+	connection = create_connection()
+	try:
+		with connection.cursor() as cursor:
+			if request.method == "POST":
+				username_form = request.form['username']
+				val = request.args.get('workshopId')
+				select_sql = "INSERT INTO  * FROM tblworkshops WHERE workshopId = %s"
+				cursor.execute(select_sql, val)
+				workshop = list(cursor.fetchall())
+	finally:
+		connection.close()
+	return redirect(url_for("hello"))
 
 
 @app.route('/create', methods=["GET","POST"])

@@ -17,6 +17,7 @@
 	</thead>
 	<tbody>
 		{% for data in datas %}
+		{% include 'edit.html' %}
 		<tr>
 			<th scope="row">{{data.Id}}</th>
 			<td>{{data.subject}}</td>
@@ -28,7 +29,7 @@
 			<td>{{data.enrolled}}</td>
 			<td>{{data.maxStudents}}</td>
 			<td>
-				<a href="/edit" class="btn btn-info btn-rounded mb-4">
+				<a href=""  class="btn btn-info btn-rounded mb-4" data-toggle="modal" data-target="#modaleditForm{{data.Id}}">
 					Edit
 				</a>
 				<a href="/deleteData?workshopId={{data.Id}}" class="btn btn-danger btn-rounded mb-4">
