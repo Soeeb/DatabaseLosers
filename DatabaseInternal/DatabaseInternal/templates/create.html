@@ -1,49 +1,49 @@
 ﻿<form action="/create" method="post" class="needs-validation" novalidate>
-    <div class="modal fade" id="modalCreateForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header text-center">
-                    <h4 class="modal-title w-100 font-weight-bold">Create a new workshop</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body mx-3">
-                    <div class="md-form mb-5">
-                        <i class="fas fa-lock prefix grey-text"></i>
-                        <input type="date" id="date" class="form-control validate" name="date">
-                        <label data-error="wrong" data-success="right" for="orangeForm-pass">Date</label>
-                    </div>
+	<div class="modal fade" id="modalCreateForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		 aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header text-center">
+					<h4 class="modal-title w-100 font-weight-bold">Create a new workshop</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body mx-3">
+					<div class="md-form mb-5">
+						<i class="fas fa-lock prefix grey-text"></i>
+						<input type="datetime-local" id="date" class="form-control validate" name="date" required>
+						<label data-error="wrong" data-success="right" for="orangeForm-pass">Date</label>
+					</div>
 
-                    <div class="md-form mb-5">
-                        <i class="fas fa-lock prefix grey-text"></i>
-                        <input type="text" id="room" class="form-control validate" name="room">
-                        <label data-error="wrong" data-success="right" for="orangeForm-pass">Room</label>
-                    </div>
+					<div class="md-form mb-5">
+						<i class="fas fa-lock prefix grey-text"></i>
+						<input type="text" id="room" class="form-control validate" name="room" required>
+						<label data-error="wrong" data-success="right" for="orangeForm-pass">Room</label>
+					</div>
 
-                    <div class="md-form mb-5">
-                        <i class="fas fa-lock prefix grey-text"></i>
-                        <input type="text" id="subject" class="form-control validate" name="subject">
-                        <label data-error="wrong" data-success="right" for="orangeForm-pass">Subject</label>
-                    </div>
+					<div class="md-form mb-5">
+						<i class="fas fa-lock prefix grey-text"></i>
+						<input type="text" id="subject" class="form-control validate" name="subject" required>
+						<label data-error="wrong" data-success="right" for="orangeForm-pass">Subject</label>
+					</div>
 
-                    <div class="md-form mb-5">
-                        <i class="fas fa-lock prefix grey-text"></i>
-                        <input type="text" id="summary" class="form-control validate" name="summary">
-                        <label data-error="wrong" data-success="right" for="orangeForm-pass">Summary</label>
-                    </div>
+					<div class="md-form mb-5">
+						<i class="fas fa-lock prefix grey-text"></i>
+						<input type="text" id="summary" class="form-control validate" name="summary" required>
+						<label data-error="wrong" data-success="right" for="orangeForm-pass">Summary</label>
+					</div>
 
-                    <div class="md-form mb-5">
-                        <i class="fas fa-lock prefix grey-text"></i>
-                        <input type="number" id="maxStudents" class="form-control validate" name="maxStudents" min="1" max="30">
-                        <label data-error="wrong" data-success="right" for="orangeForm-pass">Max Students</label>
-                    </div>
-                </div>
-                <div class="modal-footer d-flex justify-content-center">
-                    <button type="submit" class="btn btn-deep-orange">Create</button>
-                </div>
-            </div>
-        </div>
-    </div>
+					<div class="md-form mb-5">
+						<i class="fas fa-lock prefix grey-text"></i>
+						<input type="number" id="maxStudents" class="form-control validate" name="maxStudents" min="1" max="30" required>
+						<label data-error="wrong" data-success="right" for="orangeForm-pass">Max Students</label>
+					</div>
+				</div>
+				<div class="modal-footer d-flex justify-content-center">
+					<button type="submit" class="btn btn-deep-orange">Create</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </form>

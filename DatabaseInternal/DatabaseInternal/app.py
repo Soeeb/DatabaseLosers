@@ -22,7 +22,7 @@ def allWorkshops():
 	connection=create_connection()
 	try:
 		with connection.cursor() as cursor:
-			select_sql = "SELECT tw.workshopId Id, tw.subject subject, tw.room room, tw.summary summary,tw.maxStudents maxStudents, tw.teacherId teacherId, tw.date date, qCounts.StudentCount enrolled, tu.familyName familyName FROM tblworkshops tw INNER JOIN ( SELECT tw.WorkshopId, COUNT(ta.UserId) StudentCount FROM tblworkshops tw LEFT JOIN tblworkshopassign ta ON tw.WorkshopId = ta.WorkshopId GROUP BY tw.WorkshopId ORDER BY tw.WorkshopId) qCounts ON tw.WorkshopId = qCounts.WorkshopId LEFT JOIN tblusers tu ON tu.UserId=tw.teacherId"
+			select_sql = "SELECT tw.workshopId Id, tw.subject subject, tw.room room, tw.summary summary,tw.maxStudents maxStudents, tw.teacherId teacherId, DATE_FORMAT(tw.Date,'%Y-%m-%dT%H:%i') date, qCounts.StudentCount enrolled, tu.familyName familyName FROM tblworkshops tw INNER JOIN ( SELECT tw.WorkshopId, COUNT(ta.UserId) StudentCount FROM tblworkshops tw LEFT JOIN tblworkshopassign ta ON tw.WorkshopId = ta.WorkshopId GROUP BY tw.WorkshopId ORDER BY tw.WorkshopId) qCounts ON tw.WorkshopId = qCounts.WorkshopId LEFT JOIN tblusers tu ON tu.UserId=tw.teacherId"
 			cursor.execute(select_sql)
 			data = cursor.fetchall()
 			data = list(data)
@@ -174,11 +174,18 @@ def edit():
 	try:
 		with connection.cursor() as cursor:
 			if request.method == "POST":
-				username_form = request.form['username']
+				date_form = request.form['date']
+				room_form = request.form['room']
+				subject_form = request.form['subject']
+				summary_form = request.form['summary']
+				teacher_form = session['userId']
+				maxStudent_form = request.form['maxStudents']
+				workshop_form = request.form["workshopId"]
 				val = request.args.get('workshopId')
-				select_sql = "INSERT INTO  * FROM tblworkshops WHERE workshopId = %s"
+				select_sql = "UPDATE tblworkshops SET (date, room, subject, summary, teacherId, maxStudents) VALUES (%s, %s, %s, %s, %s, %s) WHERE workshopId = %s"
+				val = (date_form, room_form, subject_form, summary_form, teacher_form, int(maxStudent_form), workshop_form)
 				cursor.execute(select_sql, val)
-				workshop = list(cursor.fetchall())
+				connection.commit()
 	finally:
 		connection.close()
 	return redirect(url_for("hello"))
