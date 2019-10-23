@@ -182,7 +182,7 @@ def edit():
 				maxStudent_form = request.form['maxStudents']
 				workshop_form = request.form["workshopId"]
 				val = request.args.get('workshopId')
-				select_sql = "UPDATE tblworkshops SET (date, room, subject, summary, teacherId, maxStudents) VALUES (%s, %s, %s, %s, %s, %s) WHERE workshopId = %s"
+				select_sql = "UPDATE tblworkshops SET date = %s, room = %s, subject = %s, summary = %s, teacherId =%s , maxStudents = %s WHERE workshopId = %s"
 				val = (date_form, room_form, subject_form, summary_form, teacher_form, int(maxStudent_form), workshop_form)
 				cursor.execute(select_sql, val)
 				connection.commit()
@@ -203,7 +203,6 @@ def create():
 				summary_form = request.form['summary']
 				teacher_form = session['userId']
 				maxStudent_form = request.form['maxStudents']
-
 				select_sql = "INSERT INTO `tblworkshops` (date, room, subject, summary, teacherId, maxStudents) VALUES (%s, %s, %s, %s, %s, %s)"
 				val = (date_form, room_form, subject_form, summary_form, teacher_form, int(maxStudent_form))
 				print(val)
